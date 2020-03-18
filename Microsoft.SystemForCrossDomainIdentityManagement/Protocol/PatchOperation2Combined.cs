@@ -7,6 +7,7 @@ namespace Microsoft.SCIM
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
     using System.Runtime.Serialization;
     using Newtonsoft.Json;
 
@@ -32,6 +33,10 @@ namespace Microsoft.SCIM
         {
             get
             {
+                if(this.values == null)
+                {
+                    this.values = this.Path.SubAttributes.First()?.ComparisonValue;
+                }
                 return JsonConvert.SerializeObject(this.values);
             }
 
