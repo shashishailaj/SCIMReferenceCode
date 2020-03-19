@@ -148,9 +148,14 @@ namespace Microsoft.SCIM
                                                  Value = item.Value
                                              })
                                      .ToArray();
-                                group.Members =
-                                    group.Members != null ?
-                                        group.Members.Concat(newMembers).ToArray() : newMembers;
+
+                                foreach(Member member in newMembers)
+                                {
+                                    if (!group.Members.Any(M => M.Value == member.Value))
+                                    {
+                                        group.Members = group.Members.Concat(new [] {member});
+                                    }
+                                }
 
                                 break;
 
